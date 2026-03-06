@@ -1,0 +1,66 @@
+export default function Contact() {
+	return (
+		<section id="contact" className="flex flex-col px-15 min-h-[90vh]">
+			<div className="flex items-center py-5">
+				<div className="border-b-2 border-[var(--purple-full)] w-25"></div>
+				<div className="uppercase text-[var(--purple-full)] px-5 text-[1.25rem]">
+					Contact
+				</div>
+				<div className="border-b-2 border-[var(--purple-full)] w-25"></div>
+			</div>
+			<div className="text-[10rem] uppercase font-bold text-left py-10 text-[var(--purple-full)] w-[65%] leading-[100%]">
+				Let's connect &rarr;
+			</div>
+			<div className="uppercase flex items-center gap-30 pb-10">
+				<div className="flex-1 text-[3.5rem] font-extrathin">
+					&rarr; I thank you for the opportunity to connect with you.
+				</div>
+				<div className="flex-1 flex flex-col self-start">
+					<div className="text-[3.5rem] font-bold">Social Info</div>
+					<div className="font-[100] text-[1.5rem]">
+						<div>
+							<strong className="font-bold">E-mail: </strong>
+							<a
+								target="_blank"
+								href="mailto:namanbaranwal2002@gmail.com"
+								className="underline hover:text-[var(--purple-full)]"
+							>
+								namanbaranwal2002@gmail.com
+							</a>
+						</div>
+						<div>
+							<strong className="font-bold">LinkedIn: </strong>
+							<a
+								target="_blank"
+								href="https://linkedin.com/in/prgmaz"
+								className="underline hover:text-[var(--purple-full)]"
+							>
+								@prgmaz
+							</a>
+						</div>
+						<div>
+							<strong className="font-bold">Instgram: </strong>
+							<a
+								target="_blank"
+								href="https://instagram.com/prgmaz"
+								className="underline hover:text-[var(--purple-full)]"
+							>
+								@prgmaz
+							</a>
+						</div>
+						<div>
+							<strong className="font-bold">Github: </strong>
+							<a
+								target="_blank"
+								href="https://github.com/Prgmaz"
+								className="underline hover:text-[var(--purple-full)]"
+							>
+								Prgmaz
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
+}
