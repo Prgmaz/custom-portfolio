@@ -8,6 +8,10 @@
 	box-sizing: border-box;
 }
 
+html {
+	scroll-behavior: smooth !important;
+}
+
 :root {
 	--background: #000000;
 	--foreground: #ffffff;
