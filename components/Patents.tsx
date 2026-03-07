@@ -27,7 +27,9 @@ export default function Patents() {
 			const tl = gsap.timeline({
 				scrollTrigger: {
 					trigger: "#patents",
-					start: "top 80%",
+					start: "top center",
+					end: "bottom center",
+					toggleActions: "play reverse play reverse",
 				},
 			});
 
@@ -65,6 +67,11 @@ export default function Patents() {
 				<div className="gsap-text">Deep learning</div>
 			</div>
 			<div className="border-b-2 opacity-25"></div>
+			<div className="flex font-light items-center justify-between uppercase pt-2 text-[var(--purple)]">
+				<div className="gsap-text">Number</div>
+				<div className="gsap-text">Title</div>
+				<div className="gsap-text">Patent Number</div>
+			</div>
 			{patents.map((work, index) => {
 				if (
 					!work.PatentNumber ||

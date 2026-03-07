@@ -9,18 +9,6 @@ gsap.registerPlugin(ScrollTrigger, SplitText, ScrollSmoother);
 
 export default function Home() {
 	useGSAP(() => {
-		const marquee = document.querySelector("#marquee") ?? null;
-		if (!marquee) return;
-
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: "#home",
-				start: "top top",
-				end: () => "+=" + marquee.scrollWidth,
-				scrub: true,
-				pin: true,
-			},
-		});
 		const words = SplitText.create("#home .gsap-text", {
 			type: "words, lines",
 		});
@@ -32,10 +20,7 @@ export default function Home() {
 			stagger: 0.1,
 		});
 
-		tl.to(marquee, {
-			x: () => -(marquee.scrollWidth - window.innerWidth),
-			ease: "none",
-		});
+		return () => words.revert();
 	}, []);
 
 	return (
@@ -62,12 +47,12 @@ export default function Home() {
 				</div>
 			</nav>
 			<div className="overflow-hidden">
-				<div
-					id="marquee"
-					className="leading-[100%] text-[30rem] font-black text-center uppercase text-nowrap text-[var(--purple)] mix-blend-exclusion"
+				<Marquee
+					speed={200}
+					className="overflow-hidden leading-[100%] text-[30rem] font-black text-center uppercase text-nowrap text-[var(--purple)] mix-blend-exclusion"
 				>
 					Naman&nbsp;&nbsp;Baranwal&nbsp;&nbsp;
-				</div>
+				</Marquee>
 			</div>
 			<div className="flex items-center justify-between px-15 py-10 font-regular">
 				<div className="gsap-text flex-1 text-[3rem] text-left">

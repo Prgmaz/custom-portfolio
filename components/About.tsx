@@ -13,8 +13,15 @@ export default function About() {
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: "#about",
-				start: "top 80%",
+				start: "top center",
+				end: "bottom center",
+				toggleActions: "play reverse play reverse",
 			},
+		});
+
+		tl.from("#about>.slide-left", {
+			xPercent: -150,
+			duration: 0.5,
 		});
 
 		tl.from(words.words, {
@@ -24,10 +31,7 @@ export default function About() {
 			stagger: 0.05,
 		});
 
-		tl.from("#about>.slide-left", {
-			xPercent: -150,
-			duration: 0.5,
-		});
+		return () => words.revert();
 	}, []);
 
 	return (
@@ -35,7 +39,7 @@ export default function About() {
 			id="about"
 			className="bg-black flex flex-col px-15 min-h-screen"
 		>
-			<h2 className="gsap-text uppercase font-medium text-[12rem] text-[var(--purple-full)] leading-[100%] mt-15">
+			<h2 className="slide-left uppercase font-medium text-[12rem] text-[var(--purple-full)] leading-[100%] mt-15">
 				About Me
 			</h2>
 			<div className="flex font-light items-center justify-between uppercase pb-2">

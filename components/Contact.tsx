@@ -9,7 +9,9 @@ export default function Contact() {
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: "#contact",
-				start: "top 80%",
+				start: "top center",
+				end: "bottom center",
+				toggleActions: "play reverse play reverse",
 			},
 		});
 		const words = SplitText.create("#contact .gsap-text", {
@@ -27,6 +29,7 @@ export default function Contact() {
 			duration: 1,
 			ease: "power2.out",
 		});
+		return () => words.revert();
 	}, []);
 	return (
 		<section id="contact" className="flex flex-col px-15 min-h-[90vh]">

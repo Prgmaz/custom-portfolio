@@ -9,7 +9,9 @@ export default function Footer() {
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: "#footer",
-				start: "top 80%",
+				start: "top bottom",
+				end: "bottom top",
+				toggleActions: "play reverse play reverse",
 			},
 		});
 
@@ -23,6 +25,8 @@ export default function Footer() {
 			duration: 1,
 			ease: "power2.out",
 		});
+
+		return () => words.revert();
 	}, []);
 
 	return (

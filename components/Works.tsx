@@ -27,7 +27,9 @@ export default function Works() {
 			const tl = gsap.timeline({
 				scrollTrigger: {
 					trigger: "#works",
-					start: "top 80%",
+					start: "top center",
+					end: "bottom center",
+					toggleActions: "play reverse play reverse",
 				},
 			});
 
@@ -65,6 +67,11 @@ export default function Works() {
 				<div className="gsap-text">Deep learning</div>
 			</div>
 			<div className="border-b-2 opacity-25"></div>
+			<div className="flex font-light items-center justify-between uppercase pt-2 text-[var(--purple)]">
+				<div className="gsap-text">Number</div>
+				<div className="gsap-text">Title</div>
+				<div className="gsap-text">Year</div>
+			</div>
 			{works.map((work, index) => {
 				if (!work.Year || !work.Title || !work.Authors) {
 					return null;
