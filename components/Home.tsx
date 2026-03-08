@@ -4,29 +4,39 @@ import Marquee from "react-fast-marquee";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger, SplitText, ScrollSmoother } from "gsap/all";
+import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrollSmoother);
 
 export default function Home() {
-	useGSAP(() => {
-		const words = SplitText.create("#home .gsap-text", {
-			type: "words, lines",
-		});
+	const container = useRef(null);
+	
+	useGSAP(
+		() => {
+			const words = SplitText.create("#home .gsap-text", {
+				type: "words, lines",
+			});
 
-		gsap.from(words.words, {
-			opacity: 0,
-			yPercent: 100,
-			duration: 1,
-			stagger: 0.1,
-		});
+			gsap.from(words.words, {
+				opacity: 0,
+				yPercent: 100,
+				duration: 1,
+				stagger: 0.1,
+			});
 
-		return () => words.revert();
-	}, []);
+			return () => {
+				words.revert();
+				ScrollTrigger.refresh();
+			};
+		},
+		{ scope: container },
+	);
 
 	return (
 		<section
+			ref={container}
 			id="home"
-			className="min-h-screen bg-[url(/aam.png)] bg-center bg-no-repeat flex flex-col justify-between overflow-hidden"
+			className="overflow-hidden min-h-screen bg-[url(/aam.png)] bg-center bg-no-repeat flex flex-col justify-between overflow-hidden"
 		>
 			<nav className="flex items-center justify-between py-6 px-15 text-[1.5rem]">
 				<div className="flex-2">

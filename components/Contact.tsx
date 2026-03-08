@@ -3,36 +3,49 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
+import { useRef } from "react";
 
 export default function Contact() {
-	useGSAP(() => {
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: "#contact",
-				start: "top center",
-				end: "bottom center",
-				toggleActions: "play reverse play reverse",
-			},
-		});
-		const words = SplitText.create("#contact .gsap-text", {
-			type: "words, lines",
-		});
+	const container = useRef(null);
 
-		tl.from("#contact .slide-left", {
-			xPercent: -100,
-			duration: 0.5,
-		});
+	useGSAP(
+		() => {
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: container.current,
+					start: "top top",
+					end: "+=100%",
+					toggleActions: "play pause play reverse",
+				},
+			});
+			const words = SplitText.create("#contact .gsap-text", {
+				type: "words, lines",
+			});
 
-		tl.from(words.words, {
-			opacity: 0,
-			yPercent: 100,
-			duration: 1,
-			ease: "power2.out",
-		});
-		return () => words.revert();
-	}, []);
+			tl.from("#contact .slide-left", {
+				xPercent: -100,
+				duration: 0.5,
+			});
+
+			tl.from(words.words, {
+				opacity: 0,
+				yPercent: 100,
+				duration: 1,
+				ease: "power2.out",
+			});
+			return () => {
+				words.revert();
+				ScrollTrigger.refresh();
+			};
+		},
+		{ scope: container },
+	);
 	return (
-		<section id="contact" className="flex flex-col px-15 min-h-[90vh]">
+		<section
+			ref={container}
+			id="contact"
+			className="overflow-hidden bg-black flex flex-col px-15 min-h-[90vh]"
+		>
 			<div className="flex items-center py-5">
 				<div className="border-b-2 border-[var(--purple-full)] w-25"></div>
 				<div className="uppercase text-[var(--purple-full)] px-5 text-[1.25rem]">

@@ -3,41 +3,51 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
+import { useRef } from "react";
 
 export default function About() {
-	useGSAP(() => {
-		const words = SplitText.create("#about .gsap-text", {
-			type: "words, lines",
-		});
+	const container = useRef(null);
 
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: "#about",
-				start: "top center",
-				end: "bottom center",
-				toggleActions: "play reverse play reverse",
-			},
-		});
+	useGSAP(
+		() => {
+			const words = SplitText.create("#about .gsap-text", {
+				type: "words, lines",
+			});
 
-		tl.from("#about>.slide-left", {
-			xPercent: -150,
-			duration: 0.5,
-		});
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: container.current,
+					start: "top top",
+					end: "+=100%",
+					toggleActions: "play pause play reverse",
+				},
+			});
 
-		tl.from(words.words, {
-			opacity: 0,
-			yPercent: 100,
-			duration: 1,
-			stagger: 0.05,
-		});
+			tl.from("#about>.slide-left", {
+				xPercent: -150,
+				duration: 0.5,
+			});
 
-		return () => words.revert();
-	}, []);
+			tl.from(words.words, {
+				opacity: 0,
+				yPercent: 100,
+				duration: 1,
+				stagger: 0.05,
+			});
+
+			return () => {
+				words.revert();
+				ScrollTrigger.refresh();
+			};
+		},
+		{ scope: container },
+	);
 
 	return (
 		<section
+			ref={container}
 			id="about"
-			className="bg-black flex flex-col px-15 min-h-screen"
+			className="overflow-hidden bg-black flex flex-col px-15 min-h-screen"
 		>
 			<h2 className="slide-left uppercase font-medium text-[12rem] text-[var(--purple-full)] leading-[100%] mt-15">
 				About Me

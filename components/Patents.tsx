@@ -1,13 +1,14 @@
 "use client";
 
 import Papa from "papaparse";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
 
 export default function Patents() {
 	const [patents, setPatents] = useState<any[]>([]);
+	const container = useRef(null);
 
 	useEffect(() => {
 		Papa.parse("/patents.csv", {
@@ -26,10 +27,10 @@ export default function Patents() {
 
 			const tl = gsap.timeline({
 				scrollTrigger: {
-					trigger: "#patents",
+					trigger: container.current,
 					start: "top center",
 					end: "bottom center",
-					toggleActions: "play reverse play reverse",
+					toggleActions: "play pause play reverse",
 				},
 			});
 
@@ -51,13 +52,18 @@ export default function Patents() {
 
 			return () => {
 				words.revert();
+				ScrollTrigger.refresh();
 			};
 		},
-		{ dependencies: [patents] },
+		{ dependencies: [patents], scope: container },
 	);
 
 	return (
-		<section id="patents" className="flex flex-col px-15 min-h-screen">
+		<section
+			ref={container}
+			id="patents"
+			className="overflow-hidden bg-black flex flex-col px-15 min-h-screen"
+		>
 			<h2 className="slide-left uppercase font-medium text-[12rem] text-[var(--purple-full)] leading-[100%] mt-15">
 				My patents
 			</h2>

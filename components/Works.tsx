@@ -3,11 +3,12 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Papa from "papaparse";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SplitText, ScrollTrigger } from "gsap/all";
 
 export default function Works() {
 	const [works, setWorks] = useState<any[]>([]);
+	const container = useRef(null);
 
 	useEffect(() => {
 		Papa.parse("/citations.csv", {
@@ -26,10 +27,10 @@ export default function Works() {
 
 			const tl = gsap.timeline({
 				scrollTrigger: {
-					trigger: "#works",
+					trigger: container.current,
 					start: "top center",
 					end: "bottom center",
-					toggleActions: "play reverse play reverse",
+					toggleActions: "play pause play reverse",
 				},
 			});
 
@@ -51,13 +52,18 @@ export default function Works() {
 
 			return () => {
 				words.revert();
+				ScrollTrigger.refresh();
 			};
 		},
-		{ dependencies: [works] },
+		{ dependencies: [works], scope: container },
 	);
 
 	return (
-		<section id="works" className="flex flex-col px-15 min-h-screen">
+		<section
+			ref={container}
+			id="works"
+			className="overflow-hidden bg-black flex flex-col px-15 min-h-screen"
+		>
 			<h2 className="slide-left uppercase font-medium text-[12rem] text-[var(--purple-full)] leading-[100%] mt-15">
 				My works
 			</h2>
